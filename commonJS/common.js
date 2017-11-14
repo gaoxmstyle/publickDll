@@ -481,6 +481,28 @@ var gxmJs = { vars: {}, funcs: {}, classes: {}, cache: {}, module: {} };
 			days = hours * 24;
 			return days;
 		};
+		/**判断是否OS系统里 */
+        funcs.isOS = function(){
+            var ua = navigator.userAgent.toLowerCase();	
+            if (/iphone|ipad|ipod/.test(ua)) {
+                return 1;
+            } else if (/android/.test(ua)) {
+                    return -1;
+            } else {
+                return 0;
+            }
+        };
+        /**判断是否在微信里 */
+        funcs.isWeiChat = function(){
+            var ua = window.navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                // console.log("我在微信里呀");
+                return true;
+            } else {
+                // console.log("不在微信里呀");
+                return false;
+            }
+        }
 		//{{{{ hack ie7/8 的方法，不需要可以删除
 		/** 兼容IE 7/8 new Date() 不能添加字符串的bug */
 		funcs.parseISO8601 = function(dateStringInRange) {
