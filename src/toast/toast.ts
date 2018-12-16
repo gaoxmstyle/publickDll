@@ -4,13 +4,13 @@ namespace GXM {
         show(text: string): void;
     }; 
 
-    class Toast implements Modal {
+    export class Toast implements Modal {
         render(options: object) {
             console.log('render');
         };
 
         show(text: string) {
-            console.log('show');
+            console.log(text);
         }
     }
 }
