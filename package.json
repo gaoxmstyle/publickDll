@@ -1,0 +1,11 @@
+{
+  "name": "publickDll",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nativeyou/publickDll.git",
+  "author": "gaoxuemeng <gaoxm13253609271@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^4.27.1"
+  }
+}
