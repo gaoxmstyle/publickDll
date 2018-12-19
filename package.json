@@ -11,9 +11,18 @@
     "start": "node ./scripts/start.js"
   },
   "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@types/object-assign": "^4.0.30",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^1.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "object-assign": "^4.1.1",
+    "opn": "^5.4.0",
     "ts-loader": "^5.3.1",
     "typescript": "^3.2.2",
-    "webpack": "^4.27.1"
+    "webpack": "^4.27.1",
+    "webpack-dev-server": "^3.1.10"
   }
 }

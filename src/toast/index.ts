@@ -1,1 +1,1 @@
-/// <reference path='./toast.ts' />;
+export * from './Toast';

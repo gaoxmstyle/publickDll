@@ -5,14 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>toast</title>
+    <style>
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
+        html, 
+        body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
-    <script src="../dist/js/main.cfe06df9.js"></script>
+    <button onclick="toastShow()">click me</button>
     <script>
-        window.onload = function() {
-            var Main = GXM.Main;
-            
-            var app = new Main();
+        var toast = new GXM.Toast({
+            content: 'hello world!'
+        });
+
+        function toastShow() {
+            toast.show();
         }
     </script>
 </body>
