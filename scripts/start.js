@@ -28,7 +28,29 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat(
                     loader: 'html-loader',
                 }
             ]
-        } 
+        },
+        {
+            test: /\.scss$/,
+            use: [
+                {
+                    loader: 'style-loader'
+                },
+                {
+                    loader: 'css-loader'
+                },
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        config: {
+                            path: './config/postcss.config.js'
+                        }
+                    }
+                },
+                {
+                    loader: 'sass-loader'
+                }
+            ]
+        }
     ]
 )
 

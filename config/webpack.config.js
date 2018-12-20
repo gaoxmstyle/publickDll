@@ -31,7 +31,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'example/toast.html',
+            template: 'example/modal.html',
             inject: 'head'
         })
     ]
