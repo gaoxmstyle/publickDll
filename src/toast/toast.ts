@@ -63,7 +63,7 @@ export class Toast implements Modal {
     show(text: string = this.o.content) {
         this.timer && clearTimeout(this.timer);
         (!this.toast.classList.contains('show')) && this.toast.classList.add('show');
-        (this.toast.innerText !== text) && (this.toast.innerText = 'asd');
+        (this.toast.innerText !== text) && (this.toast.innerText = text);
 
         this.timer = setTimeout(()=> {
             this.toast.classList.remove('show');

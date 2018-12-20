@@ -19,6 +19,7 @@
 </head>
 <body>
     <button onclick="toastShow()">click me</button>
+    <button onclick="show()">click me</button>
     <script>
         var toast = new GXM.Toast({
             content: 'hello world!'
@@ -26,6 +27,10 @@
 
         function toastShow() {
             toast.show();
+        }
+
+        function show() {
+            toast.show('asdasd123123');
         }
     </script>
 </body>
