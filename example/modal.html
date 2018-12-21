@@ -22,19 +22,18 @@
     </style>
 </head>
 <body>
-    <button onclick="toastShow()">click me</button>
     <button onclick="show()">click me</button>
     <script>
         var toast = new GXM.Modal({
-            content: 'hello world!'
+            title: '温馨提示',
+            content: 'hello world!',
+            maskCallBack: function (e) {
+                e.target.parentNode.classList.remove('show');
+            }
         });
 
-        function toastShow() {
-            toast.show();
-        }
-
         function show() {
-            toast.show({content: 'asdasdas'});
+            toast.show();
         }
     </script>
 </body>

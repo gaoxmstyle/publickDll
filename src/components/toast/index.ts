@@ -14,14 +14,15 @@ export default class Toast implements IModal {
             content: options.content || '',
             el: options.el || null,
             title: options.title || '',
-            during: options.during || 1000
+            during: options.during || 1000,
+            maskCallBack: options.maskCallBack || null
         };
 
         this.render(this.defaultOptions);
     }
 
     render(options: TModal) {
-        const toastHtml = `<div class='toast'>${options.content}</div>`;
+        const toastHtml = `<div class='gxm-toast'>${options.content}</div>`;
         
         this.el = document.body;
         if(options.el !== null) {

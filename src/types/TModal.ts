@@ -3,4 +3,5 @@ export type TModal = {
     el: string;
     title: string;
     during: number;
+    maskCallBack: any
 }
