@@ -1,10 +1,10 @@
-import { IModal } from '../../interface/index';
+import {IModal} from '../../interface/index';
 import {TModal} from '../../types/TModal';
 import './index.scss';
 
-export default class Modal implements IModal {
+export default class Dialog implements IModal {
     el: any;
-    modal: any;
+    dialog: any;
     defaultOptions: TModal;
 
     constructor(options: TModal) {
@@ -24,7 +24,7 @@ export default class Modal implements IModal {
     }
 
     render(options: TModal) {
-        const modalHtml = `<div class='gxm-modal'><div class='mask'></div><div class='container'><div class='title'>${options.title}</div><div class='content'>${options.content}</div></div></div>`;
+        const dialogHtml = `<div class='gxm-dialog'><div class='mask'></div><div class='container'><div class='title'>${options.title}</div><div class='content'>${options.content}</div><div class='btn-container'>${this.defaultOptions.isCancel ? '<button class=\'confirm\'>确定</button><button class=\'cancel\'>取消</button>':'<button class=\'confirm\'>确定</button>'}</div></div></div>`;
 
         this.el = document.body;
         if(options.el !== null) {
@@ -32,36 +32,44 @@ export default class Modal implements IModal {
         }
 
         const html = document.createElement('div');
-        html.innerHTML = modalHtml;
-        this.modal = html.childNodes[0];
+        html.innerHTML = dialogHtml;
+        this.dialog = html.childNodes[0];
 
         if(options.maskCallBack) {
-            const mask = this.modal.querySelector('.mask');
+            const mask = this.dialog.querySelector('.mask');
             mask.addEventListener('click', (e: any) => {
                 options.maskCallBack(e);
             });
         }
 
-        this.el.appendChild(this.modal);
+        const btnConfirm = this.dialog.querySelector('.confirm');
+        const btnCancel = this.dialog.querySelector('.cancel');
+
+        btnConfirm.addEventListener('click', (e: any) => {
+            options.confirmCallBack && options.confirmCallBack();
+        });
+
+        btnCancel && btnCancel.addEventListener('click', (e: any) => {
+            this.hide();
+            options.cancelCallBack && options.cancelCallBack();
+        });
+
+        this.el.appendChild(this.dialog);
     }
 
     show(options: TModal) {
         const title = (options && options.title) || this.defaultOptions.title;
         const content = (options && options.content) || this.defaultOptions.content;
-        const titleNode = this.modal.querySelector('.title');
-        const contentNode = this.modal.querySelector('.content');
+        const titleNode = this.dialog.querySelector('.title');
+        const contentNode = this.dialog.querySelector('.content');
 
         (titleNode.innerText !== title) && (titleNode.innerText = title);
         (contentNode.innerText !== content) && (contentNode.innerText = content);
 
-        this.modal.classList.add('show');
+        this.dialog.classList.add('show');
     }
 
     hide() {
-        this.modal.classList.remove('show');
-    }
-
-    toggle() {
-        this.modal.classList.toggle('show');
+        this.dialog.classList.remove('show');
     }
 }

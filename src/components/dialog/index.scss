@@ -1,0 +1,21 @@
+@import "../../common/style/index";
+
+.gxm-dialog {
+    .btn-container {
+        font-size: 14px;
+        color: #333333;
+        &:before {
+            content: '';
+        }
+        .confirm,
+        .cancel {
+            background-color: transparent;
+        }
+        .confirm {
+
+        }
+        .cancel {
+
+        }
+    }
+}

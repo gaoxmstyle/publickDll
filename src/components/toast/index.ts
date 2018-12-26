@@ -15,7 +15,10 @@ export default class Toast implements IModal {
             el: options.el || null,
             title: options.title || '',
             during: options.during || 1000,
-            maskCallBack: options.maskCallBack || null
+            maskCallBack: options.maskCallBack || null,
+            isCancel: options.isCancel || false,
+            confirmCallBack: options.confirmCallBack || null,
+            cancelCallBack: options.cancelCallBack || null
         };
 
         this.render(this.defaultOptions);
