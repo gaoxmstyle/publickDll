@@ -37,8 +37,8 @@ function es(components, cb) {
         name: 'Custom',
         strict: true,
         sourcemap: env === 'development',
-        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.bundle.js.map`,
-        file: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.bundle.js`,
+        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/custom.esm.bundle.js.map`,
+        file: `./${env === 'development' ? 'build' : 'dist'}/js/custom.esm.bundle.js`,
     })).then(() => {
         if(cb) cb();
     }).catch(err => {
@@ -65,8 +65,8 @@ function es(components, cb) {
         name: 'Custom',
         strict: true,
         sourcemap: env === 'development',
-        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.js.map`,
-        file: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.js`,
+        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/custom.esm.js.map`,
+        file: `./${env === 'development' ? 'build' : 'dist'}/js/custom.esm.js`,
     })).then(() => {
         if (cb) cb();
     }).catch((err) => {
@@ -98,14 +98,14 @@ function umd(components, cb) {
         name: 'Custom',
         strict: true,
         sourcemap: env === 'development',
-        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.js.map`,
-        file: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.js`,
+        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/custom.js.map`,
+        file: `./${env === 'development' ? 'build' : 'dist'}/js/custom.js`,
     })).then(() => {
         if (env === 'development') {
             if (cb) cb();
             return;
         }
-        gulp.src('./dist/js/Custom.js')
+        gulp.src('./dist/js/custom.js')
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(rename((filePath) => {

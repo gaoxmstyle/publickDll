@@ -7,16 +7,16 @@ const buildSass = require('./build-scss.js');
 
 gulp.task('playground', (cb) => {
     const env = process.env.NODE_ENV || 'development';
-    gulp.src('./playground/index.html')
+    gulp.src('./play/index.html')
         .pipe(modifyFile((content) => {
             if (env === 'development') {
                 return content
-                    .replace('../dist/css/swiper.min.css', '../build/css/swiper.css')
-                    .replace('../dist/js/swiper.min.js', '../build/js/swiper.js');
+                    .replace('../dist/css/custom.min.css', '../build/css/custom.css')
+                    .replace('../dist/js/custom.min.js', '../build/js/custom.js');
             }
             return content
-                .replace('../build/css/swiper.css', '../dist/css/swiper.min.css')
-                .replace('../build/js/swiper.js', '../dist/js/swiper.min.js');
+                .replace('../build/css/custom.css', '../dist/css/custom.min.css')
+                .replace('../build/js/custom.js', '../dist/js/custom.min.js');
         }))
         .pipe(gulp.dest('./play/'))
         .on('end', () => {
@@ -36,7 +36,7 @@ gulp.task('build', gulp.series('js', 'scss'));
 
 gulp.task('server', gulp.series('js', 'scss', function () {
     browserSync.init({
-        server: './play'
+        server: './play/'
     });
 
     gulp.watch('./src/**/**/*.js', gulp.series('js'));
