@@ -8,7 +8,6 @@ const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
 
 const config = require('./build-config.js');
-const banner = require('./banner.js');
 
 function build(cb) {
     const env = process.env.NODE_ENV || 'development';
@@ -27,17 +26,15 @@ function build(cb) {
         colors.push(`${key} ${config.colors[key]}`);
     });
 
-    gulp.src('./src/index.scss')
+    return gulp.src('./src/index.scss')
         .pipe(modifyFile((content) => {
             const newContent = content
-                .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.scss');`).join('\n'))
+                .replace('//IMPORT_COMPONENTS', components.map(component => `@import './components/${component}/${component}.scss';`).join('\n'))
                 .replace('$themeColor', config.themeColor)
                 .replace('$colors', colors.join(', '));
             return newContent;
         }))
-        .pipe(sass({
-            javascriptEnabled: true,
-        }))
+        .pipe(sass())
         .on('error', (err) => {
             if (cb) cb();
             console.error(err.toString());
@@ -49,21 +46,21 @@ function build(cb) {
             if (cb) cb();
             console.error(err.toString());
         })
-        .pipe(header(banner))
+        .pipe(rename((path) => {
+            path.basename = 'custom'
+        }))
         .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
         .on('end', () => {
             if (env === 'development') {
                 if (cb) cb();
                 return;
             }
-            gulp.src('./dist/css/dll.css')
+            gulp.src('./dist/css/custom.css')
                 .pipe(cleanCSS({
                     advanced: false,
                     aggressiveMerging: false,
                 }))
-                .pipe(header(banner))
                 .pipe(rename((filePath) => {
-                    /* eslint no-param-reassign: ["error", { "props": false }] */
                     filePath.basename += '.min';
                 }))
                 .pipe(gulp.dest('./dist/css/'))

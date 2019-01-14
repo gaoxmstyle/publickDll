@@ -25,11 +25,11 @@ gulp.task('playground', (cb) => {
 });
 
 gulp.task('js', (cb) => {
-    buildJs(cb);
+    return buildJs(cb);
 });
 
 gulp.task('scss', (cb) => {
-    buildSass(cb);
+    return buildSass(cb);
 });
 
 gulp.task('build', gulp.series('js', 'scss'));

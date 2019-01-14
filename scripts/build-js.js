@@ -10,7 +10,6 @@ const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 
 const config = require('./build-config');
-const banner = require('./banner.js');
 
 function es(components, cb) {
     const env = process.env.NODE_ENV || 'development';
@@ -27,7 +26,7 @@ function es(components, cb) {
                 'process.env.TARGET': JSON.stringify(target),
                 '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
                 '//INSTALL_COMPONENTS': components.map(component => `${component.capitalized}`).join(',\n  '),
-                '//EXPORT': 'export default dll',
+                '//EXPORT': 'export default Custom',
             }),
             resolve({
                 jsnext: true
@@ -35,11 +34,11 @@ function es(components, cb) {
         ]
     }).then(bundle => bundle.write({
         format: 'es',
-        name: 'dll',
+        name: 'Custom',
         strict: true,
         sourcemap: env === 'development',
-        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/dll.esm.js.map`,
-        file: `./${env === 'development' ? 'build' : 'dist'}/js/dll.bundle.js`,
+        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.bundle.js.map`,
+        file: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.bundle.js`,
     })).then(() => {
         if(cb) cb();
     }).catch(err => {
@@ -47,7 +46,7 @@ function es(components, cb) {
         console.log(err.toString())
     });
 
-    rollup.rollup({
+     rollup.rollup({
         input: './src/index.js',
         external: [],
         plugins: [
@@ -57,18 +56,17 @@ function es(components, cb) {
                 'process.env.TARGET': JSON.stringify(target),
                 '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
                 '//INSTALL_COMPONENTS': '',
-                '//EXPORT': `export { dll, ${components.map(component => component.capitalized).join(', ')} }`,
+                '//EXPORT': `export { Custom, ${components.map(component => component.capitalized).join(', ')} }`,
             }),
             resolve({ jsnext: true }),
         ],
     }).then(bundle => bundle.write({
         format: 'es',
-        name: 'Swiper',
+        name: 'Custom',
         strict: true,
-        banner,
         sourcemap: env === 'development',
-        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/dll.esm.js.map`,
-        file: `./${env === 'development' ? 'build' : 'dist'}/js/dll.esm.js`,
+        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.js.map`,
+        file: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.esm.js`,
     })).then(() => {
         if (cb) cb();
     }).catch((err) => {
@@ -90,31 +88,27 @@ function umd(components, cb) {
                 'process.env.TARGET': JSON.stringify(target),
                 '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
                 '//INSTALL_COMPONENTS': components.map(component => `${component.capitalized}`).join(',\n  '),
-                '//EXPORT': 'export default dll;',
+                '//EXPORT': 'export default Custom;',
             }),
             resolve({ jsnext: true }),
             buble(),
         ],
     }).then(bundle => bundle.write({
         format: 'umd',
-        name: 'Swiper',
+        name: 'Custom',
         strict: true,
         sourcemap: env === 'development',
-        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/dll.js.map`,
-        banner,
-        file: `./${env === 'development' ? 'build' : 'dist'}/js/dll.js`,
+        sourcemapFile: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.js.map`,
+        file: `./${env === 'development' ? 'build' : 'dist'}/js/Custom.js`,
     })).then(() => {
         if (env === 'development') {
             if (cb) cb();
             return;
         }
-        // Minified version
-        gulp.src('./dist/js/index.js')
+        gulp.src('./dist/js/Custom.js')
             .pipe(sourcemaps.init())
             .pipe(uglify())
-            .pipe(header(banner))
             .pipe(rename((filePath) => {
-                /* eslint no-param-reassign: ["error", { "props": false }] */
                 filePath.basename += '.min';
             }))
             .pipe(sourcemaps.write('./'))
@@ -132,9 +126,7 @@ function build(cb) {
     const env = process.env.NODE_ENV || 'development';
 
     const components = [];
-
     config.components.forEach((name) => {
-        // eslint-disable-next-line
         const capitalized = name.split('-').map((word) => {
             return word.split('').map((char, index) => {
                 if (index === 0) return char.toUpperCase();
