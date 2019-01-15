@@ -1,5 +1,6 @@
 const gulp = require('gulp');
-const browserSync = require('browser-sync').create();
+const connect = require('gulp-connect');
+const gopen = require('gulp-open');
 const modifyFile = require('gulp-modify-file');
 
 const buildJs = require('./build-js.js');
@@ -32,16 +33,33 @@ gulp.task('scss', (cb) => {
     return buildSass(cb);
 });
 
+gulp.task('reload', () => {
+    return gulp.src('./play/*.html').pipe(connect.reload());
+});
+
 gulp.task('build', gulp.series('js', 'scss'));
 
-gulp.task('server', gulp.series('js', 'scss', function () {
-    browserSync.init({
-        server: './play/'
-    });
+gulp.task('watch', (cb) => {
+    gulp.watch('./play/*.html', gulp.series('reload'));
+    gulp.watch('./src/**/**/*.js', gulp.series('js', 'reload'));
+    gulp.watch('./src/**/**/*.scss', gulp.series('scss', 'reload'));
+    cb && cb();
+});
 
-    gulp.watch('./src/**/**/*.js', gulp.series('js'));
-    gulp.watch('./src/**/**/*.scss', gulp.series('scss'));
-    gulp.watch('./play/*.html').on('change', browserSync.reload);
-}));
+gulp.task('connect', (cb) => {
+    connect.server({
+        root: ['./'],
+        livereload: true,
+        port: '3000',
+        host: '10.105.18.76'
+    });
+    cb && cb();
+});
+
+gulp.task('open', () => {
+    return gulp.src('./play/index.html').pipe(gopen({ uri: 'http://10.105.18.76:3000/play/' }));
+});
+
+gulp.task('server', gulp.series('watch', 'connect', 'open'));
 
 gulp.task('default', gulp.series('server'));

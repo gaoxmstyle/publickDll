@@ -1,6 +1,7 @@
 module.exports = {
     components: [
-        'modal'
+        'modal',
+        'Progress'
     ],
     target: 'universal',
     themeColor: '#007aff',

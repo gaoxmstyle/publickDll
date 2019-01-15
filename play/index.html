@@ -8,7 +8,11 @@
 </head>
 <body>
 <div class="">
+    <canvas id="circle">
 
+    </canvas>
+    <button id="click1">click me</button>
+    <button id="click2">click me</button>
 </div>
 <style>
     body, html {
@@ -20,7 +24,19 @@
 </style>
 <script src="../build/js/custom.js"></script>
 <script>
-console.log(Custom);
+    var circle = new Custom.Progress();
+
+    var canvas = document.querySelector('#circle');
+    var btn1 = document.getElementById('click1');
+    var btn2 = document.getElementById('click2');
+    circle.render(canvas);
+
+    btn1.addEventListener('click', function (e) {
+        circle.setRatio({priceRatio: .7});
+    });
+    btn2.addEventListener('click', function (e) {
+        circle.setRatio({priceRatio: .23});
+    });
 </script>
 </body>
 </html>

@@ -14,11 +14,18 @@ const Utils = {
             }
         });
     },
+    retainDecimal(num, fixed = 2) {
+        fixed = Math.pow(10, fixed);
+        return Math.floor(num * fixed) / fixed;
+    },
     nextTick(callback, delay = 0){
         return setTimeout(callback, delay);
     },
     now() {
         return Date.now();
+    },
+    dToR(degrees){
+        return degrees * (Math.PI / 180);
     },
     getTranslate(el, axis = 'x') {
         let matrix;
