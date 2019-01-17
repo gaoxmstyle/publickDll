@@ -27,6 +27,34 @@ const Utils = {
     dToR(degrees){
         return degrees * (Math.PI / 180);
     },
+    show(el) {
+        el.style.display = 'block';
+    },
+    hide(el) {
+        el.style.display = 'none';
+    },
+    addChild(el, nodes) {
+        !el.contains(nodes) && el.appendChild(nodes);
+    },
+    removeChild(el, nodes) {
+        el.contains(nodes) && el.removeChild(nodes);
+    },
+    transitionEnd(dom, callBack) {
+        const events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
+        function fireCallBack(e) {
+            if(e.target !== this) return;
+            callBack.call(this, e);
+            for (let i = events.length; i--;){
+                dom.removeEventListener(events[i], fireCallBack);
+            }
+        }
+
+        if(callBack) {
+            for (let i = events.length; i--;) {
+                dom.addEventListener(events[i], fireCallBack);
+            }
+        }
+    },
     getTranslate(el, axis = 'x') {
         let matrix;
         let curTransform;

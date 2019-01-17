@@ -7,12 +7,8 @@
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-<div class="">
-    <canvas id="circle">
+<div class="page">
 
-    </canvas>
-    <button id="click1">click me</button>
-    <button id="click2">click me</button>
 </div>
 <style>
     body, html {
@@ -24,19 +20,17 @@
 </style>
 <script src="../build/js/custom.js"></script>
 <script>
-    var circle = new Custom.Progress();
-
-    var canvas = document.querySelector('#circle');
-    var btn1 = document.getElementById('click1');
-    var btn2 = document.getElementById('click2');
-    circle.render(canvas);
-
-    btn1.addEventListener('click', function (e) {
-        circle.setRatio({priceRatio: .7});
+    var modal = new Custom.Modal('.page', {
+        on: {
+            confirm: function (e) {
+                console.log(e);
+            },
+            cancel: function (e) {
+                console.log(e);
+            }
+        }
     });
-    btn2.addEventListener('click', function (e) {
-        circle.setRatio({priceRatio: .23});
-    });
+    modal.show();
 </script>
 </body>
 </html>
