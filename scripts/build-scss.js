@@ -12,8 +12,9 @@ const config = require('./build-config.js');
 function build(cb) {
     const env = process.env.NODE_ENV || 'development';
 
+    const componentList = fs.readdirSync('./src/components');
     const components = [];
-    config.components.forEach((name) => {
+    componentList.forEach((name) => {
         const scssFilePath = `./src/components/${name}/${name}.scss`;
         if (fs.existsSync(scssFilePath)) {
             components.push(name);

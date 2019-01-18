@@ -23,7 +23,7 @@ export default class Modal extends GlobalClass{
     _render() {
         const _this = this;
         const modalOverlayHtml = '<div class="modal-overlay"></div>';
-        const modalHtml = `<div class="modal"><div class="modal-inner"><div class="modal-title">${_this.o.title}</div><div class="modal-content">${this.o.content}</div><div class="modal-buttons"><div class="btn-cancel btn" data-on="cancel">取消</div><div class="btn-confirm btn" data-on="confirm">确定</div></div></div></div>`;
+        const modalHtml = `<div class="modal"><div class="modal-inner"><div class="modal-title">${_this.o.title}</div><div class="modal-content">${this.o.content}</div></div><div class="modal-buttons"><div class="btn-cancel btn" data-on="cancel">取消</div><div class="btn-confirm btn" data-on="confirm">确定</div></div></div>`;
         const _html = document.createElement('div');
 
         _html.innerHTML = modalOverlayHtml;

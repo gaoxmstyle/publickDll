@@ -125,8 +125,10 @@ function umd(components, cb) {
 function build(cb) {
     const env = process.env.NODE_ENV || 'development';
 
+    const componentList = fs.readdirSync('./src/components');
+
     const components = [];
-    config.components.forEach((name) => {
+    componentList.forEach((name) => {
         const capitalized = name.split('-').map((word) => {
             return word.split('').map((char, index) => {
                 if (index === 0) return char.toUpperCase();
