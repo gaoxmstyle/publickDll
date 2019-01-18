@@ -48,6 +48,7 @@ export default class Modal extends GlobalClass{
         _this.modalArr.forEach(function (item) {
             Utils.addChild(_this.el, item);
             Utils.show(item);
+            _this.modal.style.marginTop = _this.modal.offsetHeight / 2 * -1 + 'px';
             Utils.nextTick(() => item.classList.add('in'));
         });
     }

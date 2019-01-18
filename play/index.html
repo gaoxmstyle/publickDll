@@ -5,19 +5,26 @@
     <title>Custom Playground</title>
     <link rel="stylesheet" href="../build/css/custom.css" type="text/css">
     <meta name="viewport" content="width=device-width">
+    <style>
+        body,
+        html,
+        .page {
+            padding: 0;
+            margin: 0;
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+        .scroll-wrap {
+            height: 100%;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
 </head>
 <body>
-<div class="page">
-
+<div class="page scroll-wrap">
 </div>
-<style>
-    body, html {
-        padding: 0;
-        margin: 0;
-        position: relative;
-        height: 100%;
-    }
-</style>
 <script src="../build/js/custom.js"></script>
 <script>
     var modal = new Custom.Modal('.page', {
