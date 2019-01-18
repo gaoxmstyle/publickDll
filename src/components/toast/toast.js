@@ -28,7 +28,5 @@ export default class Toast extends GlobalClass {
 
         _html.innerHTML = _toastHtml;
         this.toast = _html.childNodes[0];
-
-
     }
 }

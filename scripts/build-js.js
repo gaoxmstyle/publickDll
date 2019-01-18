@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const fs = require('fs');
+const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
@@ -8,6 +9,7 @@ const header = require('gulp-header');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
+const babylon = require('babylon');
 
 const config = require('./build-config');
 
@@ -73,6 +75,33 @@ function es(components, cb) {
         if (cb) cb();
         console.error(err.toString());
     });
+}
+
+function toReact() {
+    let fileContent = '';
+    fileContent = fileContent + readFileDisplay('./src') ;
+    console.log(fileContent);
+    const ast = babylon.parse(fileContent, {
+        sourceType:'module',
+        plugins: ["typescript", "classProperties", "jsx", "trailingFunctionCommas", "asyncFunctions", "exponentiationOperator", "asyncGenerators", "objectRestSpread", "decorators"]
+    });
+    console.log(ast);
+}
+
+function readFileDisplay(filePath) {
+    if(fs.existsSync(filePath)) {
+        const files = fs.readdirSync(filePath);
+        files.forEach(file => {
+            const fileDir = path.join(filePath, file);
+            const stats = fs.statSync(fileDir);
+            console.log(path.posix.parse(fileDir).ext);
+            if(stats.isDirectory()) {
+                readFileDisplay(fileDir);
+            } else if(path.posix.parse(fileDir).ext === 'js') {
+                return fs.readFileSync(fileDir).toString();
+            }
+        });
+    }
 }
 
 function umd(components, cb) {
@@ -148,6 +177,7 @@ function build(cb) {
         cbs += 1;
         if (cbs === expectCbs) cb();
     });
+    toReact();
     if (env !== 'development') {
         es(components, () => {
             cbs += 1;
