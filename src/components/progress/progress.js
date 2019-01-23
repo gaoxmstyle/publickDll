@@ -29,10 +29,6 @@ export default class Progress extends GlobalClass {
         };
     }
 
-    _clear(ctx) {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    }
-
     _renderCircleBg(ctx) {
         ctx.save();
         ctx.beginPath();
@@ -44,6 +40,11 @@ export default class Progress extends GlobalClass {
         ctx.stroke();
         ctx.closePath();
     }
+
+    _clear(ctx) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+
 
     _renderCircle(ctx) {
         const gradient = ctx.createLinearGradient(0, 120 * this.ratio, 0, 0);

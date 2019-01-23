@@ -26,9 +26,7 @@ function es(components, cb) {
                 delimiters: ['', ''],
                 'process.env.NODE_ENV': JSON.stringify(env),
                 'process.env.TARGET': JSON.stringify(target),
-                '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-                '//INSTALL_COMPONENTS': components.map(component => `${component.capitalized}`).join(',\n  '),
-                '//EXPORT': 'export default Custom',
+                '//EXPORT': components.map(component => `export { default as ${component.capitalized}} from './components/${component.name}/${component.name}';`).join('\n'),
             }),
             resolve({
                 jsnext: true
@@ -56,9 +54,7 @@ function es(components, cb) {
                 delimiters: ['', ''],
                 'process.env.NODE_ENV': JSON.stringify(env),
                 'process.env.TARGET': JSON.stringify(target),
-                '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-                '//INSTALL_COMPONENTS': '',
-                '//EXPORT': `export { Custom, ${components.map(component => component.capitalized).join(', ')} }`,
+                '//EXPORT': components.map(component => `export { default as ${component.capitalized}} from './components/${component.name}/${component.name}';`).join('\n'),
             }),
             resolve({ jsnext: true }),
         ],
@@ -75,17 +71,6 @@ function es(components, cb) {
         if (cb) cb();
         console.error(err.toString());
     });
-}
-
-function toReact() {
-    let fileContent = '';
-    fileContent = fileContent + readFileDisplay('./src') ;
-    console.log(fileContent);
-    const ast = babylon.parse(fileContent, {
-        sourceType:'module',
-        plugins: ["typescript", "classProperties", "jsx", "trailingFunctionCommas", "asyncFunctions", "exponentiationOperator", "asyncGenerators", "objectRestSpread", "decorators"]
-    });
-    console.log(ast);
 }
 
 function readFileDisplay(filePath) {
@@ -115,9 +100,7 @@ function umd(components, cb) {
                 delimiters: ['', ''],
                 'process.env.NODE_ENV': JSON.stringify(env),
                 'process.env.TARGET': JSON.stringify(target),
-                '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-                '//INSTALL_COMPONENTS': components.map(component => `${component.capitalized}`).join(',\n  '),
-                '//EXPORT': 'export default Custom;',
+                '//EXPORT': components.map(component => `export { default as ${component.capitalized}} from './components/${component.name}';`).join('\n'),
             }),
             resolve({ jsnext: true }),
             buble(),
@@ -158,13 +141,11 @@ function build(cb) {
 
     const components = [];
     componentList.forEach((name) => {
-        const capitalized = name.split('-').map((word) => {
-            return word.split('').map((char, index) => {
+        const capitalized = name.split('').map((char, index) => {
                 if (index === 0) return char.toUpperCase();
                 return char;
-            }).join('');
         }).join('');
-        const jsFilePath = `./src/components/${name}/${name}.js`;
+        const jsFilePath = `./src/components/${name}/index.js`;
         if (fs.existsSync(jsFilePath)) {
             components.push({ name, capitalized });
         }
@@ -177,7 +158,6 @@ function build(cb) {
         cbs += 1;
         if (cbs === expectCbs) cb();
     });
-    toReact();
     if (env !== 'development') {
         es(components, () => {
             cbs += 1;

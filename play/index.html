@@ -24,10 +24,11 @@
 </head>
 <body>
 <div class="page scroll-wrap">
+    <button id="click1">click me</button>
 </div>
 <script src="../build/js/custom.js"></script>
 <script>
-    var modal = new Custom.Modal('.page', {
+    var toast = new Custom.Toast('.page', {
         on: {
             confirm: function (e) {
                 console.log(e);
@@ -37,7 +38,9 @@
             }
         }
     });
-    modal.show();
+    document.querySelector('#click1').addEventListener('click', function () {
+        toast.show();
+    });
 </script>
 </body>
 </html>

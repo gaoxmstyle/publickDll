@@ -1,3 +1,20 @@
 .toast {
-
+    position: absolute;
+    display: none;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    background-color: rgba(0, 0, 0, .8);
+    padding: 11px 18px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 400ms;
+    z-index: 9999;
+    box-sizing: border-box;
+    &.show {
+        opacity: 1;
+    }
 }

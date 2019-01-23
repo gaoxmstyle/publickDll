@@ -21,6 +21,9 @@ const Utils = {
     nextTick(callback, delay = 0){
         return setTimeout(callback, delay);
     },
+    clearTick(timer) {
+        return timer && clearTimeout(timer);
+    },
     now() {
         return Date.now();
     },
